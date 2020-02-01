@@ -43,7 +43,6 @@ public class SlaveController : MonoBehaviour
     //Private
     CharacterController characterController;
     Vector3 AxisDirection;
-    Vector3 moveDirection = Vector3.zero;
     Vector3 epicentro = Vector3.zero;
     bool inputEnabled;
     Rigidbody rb;
@@ -58,7 +57,6 @@ public class SlaveController : MonoBehaviour
 
     #region tags
     string slaveTag = "Slave";
-    string knightTag = "Knight";
     #endregion
 
     private void Awake() {
@@ -133,7 +131,6 @@ public class SlaveController : MonoBehaviour
 
         if (MyPlayerSelection == PlayerSelection.Player1) {
             if (Mathf.Pow(Input.GetAxis(HSC1), 2) + Mathf.Pow(Input.GetAxis(VSC1), 2) > Mathf.Pow(DeadZone, 2)) {
-                Debug.Log("moveDirection: " + moveDirection);
                 Rotate();
                 Movement();
                 SlaveRotation();
@@ -141,7 +138,6 @@ public class SlaveController : MonoBehaviour
         }
         else if (MyPlayerSelection == PlayerSelection.Player2) {
             if (Mathf.Pow(Input.GetAxis(HSC2), 2) + Mathf.Pow(Input.GetAxis(VSC2), 2) > Mathf.Pow(DeadZone, 2)) {
-                Debug.Log("moveDirection: " + moveDirection);
                 Rotate();
                 Movement();
                 SlaveRotation();
@@ -160,28 +156,12 @@ public class SlaveController : MonoBehaviour
             time = timer;
             slaveRB.AddExplosionForce(power * explosionMultiplier , epicentro , radius , 0 , forceMode);
             Debug.Log("Epicentro: " + epicentro);
-
-            //float enemyMovementSpeed;
-            //Vector3 enemyDirection;
-
-
-            //enemyMovementSpeed = other.GetComponent<SlaveController>().MoveSpeed;
-            //enemyDirection = other.transform.position - transform.position;
-            //enemyDirection = enemyDirection.normalized;
-            //Debug.Log("NORMAL" + enemyDirection);
-            //float bounceCalculation = (BounceForce / MoveSpeed) * BounceMultiplier;
-            //bounceCalculation = Mathf.Clamp(bounceCalculation, 0, MaxSpeed);
-            //Vector3 playerBounce = enemyDirection * bounceCalculation;
-            //transform.Translate(playerBounce);
-
-            //Debug.Log("HIT!" + enemyMovementSpeed);
         }
     }
 
     public bool isTimerFinished() {
         bool result = false;
         time -= Time.deltaTime;
-        Debug.Log("Timer: " + time);
         if (time < 0) {
             timer = 0;
             rb.isKinematic = true;
