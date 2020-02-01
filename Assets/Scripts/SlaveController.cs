@@ -17,22 +17,37 @@ public class SlaveController : MonoBehaviour
     public float RotationSpeed;
     [Range(0, 1)]
     public float DeadZone;
+    public float radius;
+    public float explosionMultiplier;
+    public ForceMode forceMode;
+    public float timerMultiplier;
+
+    
 
     //Public
     [HideInInspector]
     public float MoveSpeed;
+    [HideInInspector]
+    public float power;
     [HideInInspector]
     public Vector3 Inertia;
     [HideInInspector]
     public Vector3 OldPos;
     [HideInInspector]
     public Vector3 VectorAngle;
+    [HideInInspector]
+    public float timer;
+    
 
 
     //Private
     CharacterController characterController;
     Vector3 AxisDirection;
     Vector3 moveDirection = Vector3.zero;
+    Vector3 epicentro = Vector3.zero;
+    bool inputEnabled;
+    Rigidbody rb;
+    float time;
 
     #region inputs
     string HSC1 = "HorizontalSlaveController1";
@@ -41,8 +56,19 @@ public class SlaveController : MonoBehaviour
     string VSC2 = "VerticalSlaveController2";
     #endregion
 
+    #region tags
+    string slaveTag = "Slave";
+    string knightTag = "Knight";
+    #endregion
+
+    private void Awake() {
+        inputEnabled = true;
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Update() {
-        CheckInput();
+        inputEnabled = isTimerFinished();
+        if (inputEnabled) CheckInput();
     }
 
 
@@ -120,9 +146,48 @@ public class SlaveController : MonoBehaviour
                 Movement();
                 SlaveRotation();
             }
-
-
         }
+    }
 
+
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.transform.CompareTag(slaveTag)) {
+            SlaveController slave = collision.gameObject.GetComponent<SlaveController>();
+            Rigidbody slaveRB = slave.GetComponent<Rigidbody>();
+            epicentro = collision.contacts[0].point;
+            power = MoveSpeed;
+            timer = MoveSpeed / (MoveSpeed / timerMultiplier);
+            time = timer;
+            slaveRB.AddExplosionForce(power * explosionMultiplier , epicentro , radius , 0 , forceMode);
+            Debug.Log("Epicentro: " + epicentro);
+
+            //float enemyMovementSpeed;
+            //Vector3 enemyDirection;
+
+
+            //enemyMovementSpeed = other.GetComponent<SlaveController>().MoveSpeed;
+            //enemyDirection = other.transform.position - transform.position;
+            //enemyDirection = enemyDirection.normalized;
+            //Debug.Log("NORMAL" + enemyDirection);
+            //float bounceCalculation = (BounceForce / MoveSpeed) * BounceMultiplier;
+            //bounceCalculation = Mathf.Clamp(bounceCalculation, 0, MaxSpeed);
+            //Vector3 playerBounce = enemyDirection * bounceCalculation;
+            //transform.Translate(playerBounce);
+
+            //Debug.Log("HIT!" + enemyMovementSpeed);
+        }
+    }
+
+    public bool isTimerFinished() {
+        bool result = false;
+        time -= Time.deltaTime;
+        Debug.Log("Timer: " + time);
+        if (time < 0) {
+            timer = 0;
+            rb.isKinematic = true;
+            rb.isKinematic = false;
+            result = true;
+        }
+        return result;
     }
 }
