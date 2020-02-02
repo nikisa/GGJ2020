@@ -11,6 +11,9 @@ public class KnightController : MonoBehaviour
     #region data
     public PlayerSelection MyPlayerSelection;
     public GameObject Target;
+    public GameObject Spear;
+    public Rigidbody EnemyRB;
+    public LifeDirect myLifeDirect;
     public float MaxSpeed;
     public float TimeAcceleration;
     public float DynamicDrag;
@@ -21,6 +24,7 @@ public class KnightController : MonoBehaviour
     public ForceMode forceMode;
     public float timerMultiplier;
     public float spearLength;
+
     #endregion
 
 
@@ -35,8 +39,6 @@ public class KnightController : MonoBehaviour
     public Vector3 OldPos;
     [HideInInspector]
     public Vector3 VectorAngle;
-    //[HideInInspector]
-    public int life;
     [HideInInspector]
     public float timer;
 
@@ -45,9 +47,11 @@ public class KnightController : MonoBehaviour
     Vector3 epicentro = Vector3.zero;
     Rigidbody rb;
     float time;
+    float timeAttack;
 
     #region tags
     string spearTag = "Spear";
+    string knightTag = "Knight";
     #endregion
 
 
@@ -143,16 +147,31 @@ public class KnightController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.transform.CompareTag(spearTag)) {
+            Debug.Log("SPEAR HAS BEEN HIT");
             KnightController knight = collision.gameObject.GetComponent<KnightController>();
             Rigidbody knightRB = knight.GetComponent<Rigidbody>();
             epicentro = collision.contacts[0].point;
             power = MoveSpeed;
             timer = MoveSpeed / (MoveSpeed / timerMultiplier);
             time = timer;
-            knightRB.AddExplosionForce(power * explosionMultiplier, epicentro, radius, 0, forceMode);
-            life--;
-            Debug.Log("Vite: " + life);
+            myLifeDirect.GetDamage();
+            doBounce(knightRB , power);
         }
+        else if (collision.transform.CompareTag(knightTag)) {
+            LifeDirect lifeDirect = collision.gameObject.GetComponent<LifeDirect>();
+            epicentro = collision.contacts[0].point;
+            power = MoveSpeed;
+            timer = MoveSpeed / (MoveSpeed / timerMultiplier);
+            time = timer;
+            lifeDirect.GetDamage();
+            Debug.Log("KNIGHT HAS BEEN HIT " + EnemyRB.name);
+            doBounce(rb, power);
+        }
+
+    }
+
+    public void doBounce(Rigidbody _knightRB , float _power) {
+        _knightRB.AddExplosionForce(_power * explosionMultiplier, epicentro, radius, 0, forceMode);
     }
 
     public bool isTimerFinished() {
@@ -167,18 +186,5 @@ public class KnightController : MonoBehaviour
         return result;
     }
 
-    public void Attack() {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit ,spearLength)) {
-            if (hit.transform.gameObject.CompareTag("Knight")) {
-                KnightController knight = hit.transform.gameObject.GetComponent<KnightController>();
-                knight.GetDamage();
-            }
-        }
-    }
-
-    public void GetDamage() {
-        this.life--;
-    }
-
+    
 }
