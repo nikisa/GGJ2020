@@ -69,7 +69,13 @@ public class SlaveController : MonoBehaviour
 
     void Update() {
         inputEnabled = isTimerFinished();
-        if (inputEnabled) CheckInput();
+        if (inputEnabled) {
+            CheckInput();
+        }
+        else {
+            animator.SetBool("isWalking", false);
+        }
+
     }
 
 
