@@ -5,4 +5,5 @@ using UnityEngine;
 public class ArmorManager : MonoBehaviour
 {
     public GameObject[] ArmorPieces;
+    public GameObject[] ActualPieces;
 }

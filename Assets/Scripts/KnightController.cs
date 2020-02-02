@@ -11,7 +11,6 @@ public class KnightController : MonoBehaviour
     #region data
     public PlayerSelection MyPlayerSelection;
     public GameObject Target;
-    public GameObject Spear;
     public Rigidbody EnemyRB;
     public LifeDirect myLifeDirect;
     public float MaxSpeed;
