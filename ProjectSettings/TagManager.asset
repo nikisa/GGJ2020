@@ -7,6 +7,13 @@ TagManager:
   - Knight
   - Slave
   - Spear
+  - Zone1
+  - Zone2
+  - Zone3
+  - Zone4
+  - RedPiece
+  - BluePiece
+  - Piece
   layers:
   - Default
   - TransparentFX
