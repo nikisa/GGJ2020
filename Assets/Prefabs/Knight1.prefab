@@ -76,7 +76,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifes: 5
   timerAttack: 1
-  knightRB: {fileID: 0}
   timeAttack: 0
 --- !u!1 &763102142
 GameObject:
@@ -333,13 +332,14 @@ MonoBehaviour:
   MyPlayerSelection: 0
   Target: {fileID: 827404905062617356}
   Spear: {fileID: 763102142}
+  EnemyRB: {fileID: 0}
   myLifeDirect: {fileID: 59882790}
-  MaxSpeed: 20
-  TimeAcceleration: 2
+  MaxSpeed: 12
+  TimeAcceleration: 3
   DynamicDrag: 1
   DeadZone: 0.256
   radius: 0.1
-  explosionMultiplier: 100
+  explosionMultiplier: 420
   forceMode: 1
   timerMultiplier: 0.75
   spearLength: 15

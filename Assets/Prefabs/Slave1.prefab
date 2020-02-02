@@ -110,17 +110,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyPlayerSelection: 0
   Target: {fileID: 520762675522024925}
-  MaxSpeed: 10
+  MaxSpeed: 8
   TimeAcceleration: 0.25
   DynamicDrag: 1
   RotationSpeed: 10
   DeadZone: 0.25
-  BounceForce: 0
-  BounceMultiplier: 0
+  radius: 0.1
+  explosionMultiplier: 85
+  forceMode: 1
+  timerMultiplier: 0.75
   MoveSpeed: 0
+  power: 50
   Inertia: {x: 0, y: 0, z: 0}
   OldPos: {x: 0, y: 0, z: 0}
   VectorAngle: {x: 0, y: 0, z: 0}
+  timer: 0
 --- !u!54 &750926814
 Rigidbody:
   m_ObjectHideFlags: 0
