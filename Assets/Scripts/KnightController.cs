@@ -24,7 +24,6 @@ public class KnightController : MonoBehaviour
     public ForceMode forceMode;
     public float timerMultiplier;
     public float spearLength;
-
     #endregion
 
 
