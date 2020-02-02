@@ -21,8 +21,9 @@ public class SlaveController : MonoBehaviour
     public float explosionMultiplier;
     public ForceMode forceMode;
     public float timerMultiplier;
+    public Animator animator;
 
-    
+
 
     //Public
     [HideInInspector]
@@ -47,6 +48,7 @@ public class SlaveController : MonoBehaviour
     bool inputEnabled;
     Rigidbody rb;
     float time;
+    
 
     #region inputs
     string HSC1 = "HorizontalSlaveController1";
@@ -62,6 +64,7 @@ public class SlaveController : MonoBehaviour
     private void Awake() {
         inputEnabled = true;
         rb = GetComponent<Rigidbody>();
+        animator.GetComponent<Animator>();
     }
 
     void Update() {
@@ -75,6 +78,7 @@ public class SlaveController : MonoBehaviour
 
         if (MyPlayerSelection == PlayerSelection.Player1) {
             if (Mathf.Pow(Input.GetAxis(HSC1), 2) + Mathf.Pow(Input.GetAxis(VSC1), 2) > Mathf.Pow(DeadZone, 2)) {
+                animator.SetBool("isWalking", true);
                 Rotate();
                 MoveSpeed = (MaxSpeed / TimeAcceleration * Time.deltaTime);
                 DynamicDrag = (MaxSpeed - MoveSpeed) / MaxSpeed;
@@ -89,6 +93,7 @@ public class SlaveController : MonoBehaviour
         }
         else if (MyPlayerSelection == PlayerSelection.Player2) {
             if (Mathf.Pow(Input.GetAxis(HSC2), 2) + Mathf.Pow(Input.GetAxis(VSC2), 2) > Mathf.Pow(DeadZone, 2)) {
+                animator.SetBool("isWalking", true);
                 Rotate();
                 MoveSpeed = (MaxSpeed / TimeAcceleration * Time.deltaTime);
                 DynamicDrag = (MaxSpeed - MoveSpeed) / MaxSpeed;
@@ -135,12 +140,18 @@ public class SlaveController : MonoBehaviour
                 Movement();
                 SlaveRotation();
             }
+            else {
+                animator.SetBool("isWalking", false);
+            }
         }
         else if (MyPlayerSelection == PlayerSelection.Player2) {
             if (Mathf.Pow(Input.GetAxis(HSC2), 2) + Mathf.Pow(Input.GetAxis(VSC2), 2) > Mathf.Pow(DeadZone, 2)) {
                 Rotate();
                 Movement();
                 SlaveRotation();
+            }
+            else {
+                animator.SetBool("isWalking", false);
             }
         }
     }
