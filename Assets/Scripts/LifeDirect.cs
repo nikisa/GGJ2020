@@ -42,16 +42,21 @@ public class LifeDirect : MonoBehaviour
             timeAttack = timerAttack;
             Debug.LogFormat("{0} has {1} lifes: ", transform.gameObject.name, lifes);
             lifes--;
-            if (lifes > 0) {
+            if (lifes >= 0) {
                 GameObject armorPiece = armor.ArmorPieces[lifes];
+                GameObject actualPiece = armor.ActualPieces[lifes];
                 distribution = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2f, 2));
-                armorPiece.transform.DOJump(dropZone.dropPoints[Random.Range(0, dropZone.dropPoints.Length)].transform.position + distribution, jumpPower, jumpNum, jumpDuration);
+                armorPiece.transform.gameObject.SetActive(true);
                 armorPiece.transform.SetParent(PiecesPool.transform);
+                actualPiece.transform.gameObject.SetActive(false);
+                armorPiece.transform.DOJump(dropZone.dropPoints[Random.Range(0, dropZone.dropPoints.Length)].transform.position + distribution, jumpPower, jumpNum, jumpDuration);
             }
         }
     }
 
     public void getLife() {
+        GameObject actualPiece = armor.ActualPieces[lifes];
+        actualPiece.SetActive(true);
         lifes++;
     }
 
