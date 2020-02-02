@@ -19,6 +19,8 @@ public class BlueKnightGrabberController : MonoBehaviour
             other.gameObject.transform.SetParent(armor.transform);
             other.gameObject.transform.parent.transform.position = Vector3.zero;
             other.gameObject.SetActive(false);
+            SoundManager.PlaySound(SoundManager.Sound.wearingArmor);
+
         }
     }
 }

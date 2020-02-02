@@ -20,6 +20,7 @@ public class SlaveGrabberController : MonoBehaviour
         if (other.gameObject.CompareTag("RedPiece") || other.gameObject.CompareTag("BluePiece")) {
             distribution = new Vector3(Random.Range(-5,5) , 0 , Random.Range(-5f, 5f));
             other.transform.DOJump(dropZoneManager.dropZones[Random.Range(0 , dropZoneManager.dropZones.Length)].transform.position + distribution, jumpPower , numJumps , duration);
+            SoundManager.PlaySound(SoundManager.Sound.funnyLaunch);
         }
     }
 }

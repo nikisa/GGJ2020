@@ -50,6 +50,12 @@ public class LifeDirect : MonoBehaviour
                 armorPiece.transform.SetParent(PiecesPool.transform);
                 actualPiece.transform.gameObject.SetActive(false);
                 armorPiece.transform.DOJump(dropZone.dropPoints[Random.Range(0, dropZone.dropPoints.Length)].transform.position + distribution, jumpPower, jumpNum, jumpDuration);
+                SoundManager.PlaySound(SoundManager.Sound.steelBrokenArmor1);
+                SoundManager.PlaySound(SoundManager.Sound.spearSound);
+                SoundManager.PlaySound(SoundManager.Sound.nitrito1);
+            }
+            else if (lifes < 0) {
+                Debug.Log("GAMEOVER");
             }
         }
     }

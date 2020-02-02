@@ -48,6 +48,7 @@ public class SlaveController : MonoBehaviour
     bool inputEnabled;
     Rigidbody rb;
     float time;
+    float timerSbuffo;
     
 
     #region inputs
@@ -62,15 +63,18 @@ public class SlaveController : MonoBehaviour
     #endregion
 
     private void Awake() {
+        timerSbuffo = 10;
         inputEnabled = true;
         rb = GetComponent<Rigidbody>();
         animator.GetComponent<Animator>();
     }
 
     void Update() {
+
         inputEnabled = isTimerFinished();
         if (inputEnabled) {
             CheckInput();
+            //GetSlaveWalking();
         }
         else {
             animator.SetBool("isWalking", false);
@@ -187,4 +191,45 @@ public class SlaveController : MonoBehaviour
         }
         return result;
     }
+
+    public void playSbuffo() {
+        timerSbuffo -= Time.deltaTime;
+
+        if (timer <= 0) {
+            SoundManager.PlaySound(SoundManager.Sound.nitrito1);
+            timer = 10;
+        }
+    }
+
+    void GetSlaveWalking() {
+        int rng = Random.Range(0, 4);
+        int previousNumber = Random.Range(0, 4);
+
+        if (rng == previousNumber && rng != 3) {
+            rng++;
+        }
+        else {
+            rng = 0;
+        }
+
+        switch (rng) {
+            case 1:
+                SoundManager.PlaySound(SoundManager.Sound.slaveWalking1);
+                previousNumber = 1;
+                break;
+            case 2:
+                SoundManager.PlaySound(SoundManager.Sound.slaveWalking2);
+                previousNumber = 2;
+                break;
+            case 3:
+                SoundManager.PlaySound(SoundManager.Sound.slaveWalking3);
+                previousNumber = 3;
+                break;
+            case 4:
+                SoundManager.PlaySound(SoundManager.Sound.slaveWalking4);
+                previousNumber = 4;
+                break;
+        }
+    }
+
 }

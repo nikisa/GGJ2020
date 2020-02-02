@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuState : MonoBehaviour
+public class MainMenuState : StateBehaviourBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        SoundManager.PlaySound(SoundManager.Sound.menu);
     }
 }
