@@ -56,6 +56,7 @@ public class LifeDirect : MonoBehaviour
             }
             else if (lifes < 0) {
                 Debug.Log("GAMEOVER");
+                ANIM
             }
         }
     }
